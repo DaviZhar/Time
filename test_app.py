@@ -1,13 +1,12 @@
-import pytest
-from main import main
+def test_metrics_route(client):
+    # Сбросить счетчик
+    global request_count
+    request_count = 0
 
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
+    # Вызвать /time 3 раза
+    for _ in range(3):
+        client.get('/time')
 
-def test_time_route(client):
-    response = client.get('/time')
+    response = client.get('/metrics')
     data = response.get_json()
-    assert response.status_code == 200
-    assert data['time'] > 0
+    assert data['count'] == 3
