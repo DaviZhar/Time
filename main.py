@@ -4,6 +4,7 @@ import time
 app = Flask(__name__)
 request_count = 0
 
+
 @app.route('/time')
 def get_time():
     global request_count
